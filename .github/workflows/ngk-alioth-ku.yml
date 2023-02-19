@@ -16,7 +16,7 @@ jobs:
         github-server-url: 'https://github.com'
         repository: Pierre2324/NGK_android_kernel_xiaomi_sm8150
         ref: T
-        path: android-kernel
+        path: android-NGK-kernel
       
     - name: Setup Build Environment
       run: |
