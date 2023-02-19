@@ -14,8 +14,8 @@ jobs:
       uses: actions/checkout@v3
       with:
         github-server-url: 'https://github.com'
-        repository: Pierre2324/NGK_android_kernel_xiaomi_sm8150
-        ref: alioth
+        repository: EmanuelCN/kernel_xiaomi_sm8250
+        ref: T
         path: android-NGK-kernel
       
     - name: Setup Build Environment
@@ -62,9 +62,9 @@ jobs:
         ######################
         make CC=clang O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabi- NM=llvm-nm LLVM=1 LLVM_IAS=1 $KERNEL_DEFCONFIG 
         ######################
-        KERNEL_STRING="~NGK-KSU//$IMAGE_VERSION-$KSU_VERSION-$IMAGE_CODE-Snapshot"
+        KERNEL_STRING="~N0-KSU//$IMAGE_VERSION-$KSU_VERSION-$IMAGE_CODE-Snapshot"
         sed -i '/CONFIG_LOCALVERSION=/ c  CONFIG_LOCALVERSION='"\"$KERNEL_STRING\""' ' out/.config
-        echo "ZIMAGE_NAME=NGK-KSU-${IMAGE_VERSION}-${KSU_VERSION}-${DEVICE_NAME}-AOSP-Snapshot" >> $GITHUB_ENV
+        echo "ZIMAGE_NAME=N0-KSU-${IMAGE_VERSION}-${KSU_VERSION}-${DEVICE_NAME}-AOSP-Snapshot" >> $GITHUB_ENV
         
         
     - name: Build Kernel
