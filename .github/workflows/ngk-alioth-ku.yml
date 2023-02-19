@@ -16,7 +16,7 @@ jobs:
         github-server-url: 'https://github.com'
         repository: EmanuelCN/kernel_xiaomi_sm8250
         ref: T
-        path: android-NGK-kernel
+        path: android-kernel
       
     - name: Setup Build Environment
       run: |
