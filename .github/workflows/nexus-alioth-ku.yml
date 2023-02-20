@@ -1,4 +1,4 @@
-name: Build AOSP NGK-Kernel for Alioth
+name: Build AOSP nexus-Kernel for Alioth
 
 on: 
   schedule:
