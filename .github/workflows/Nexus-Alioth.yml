@@ -92,7 +92,7 @@ jobs:
         cd android-kernel
         TIME=$(TZ=Asia/Shanghai date "+%Y%m%d%H%M")
         mkdir -p tmp
-        cp -fp ${{ env.ZIMAGE_DIR }}/Image.gz tmp
+        cp -fp ${{ env.ZIMAGE_DIR }}/Image tmp
         cp -fp ${{ env.ZIMAGE_DIR }}/dtbo.img tmp
         cp -rp ./anykernel/* tmp
         cd tmp
