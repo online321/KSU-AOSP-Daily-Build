@@ -82,6 +82,7 @@ jobs:
       run: |
         mkdir image_output
         cd android-kernel
+        Git clone --depth=1 https://github.com/online321/AnyKernel3.git anykernel
         TIME=$(TZ=Asia/Shanghai date "+%Y%m%d%H%M")
         mkdir -p tmp
         cp -fp ${{ env.ZIMAGE_DIR }}/Image.gz-dtb tmp
