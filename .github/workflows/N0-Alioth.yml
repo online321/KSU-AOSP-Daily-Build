@@ -17,11 +17,12 @@ jobs:
         repository: EmanuelCN/kernel_xiaomi_sm8250
         ref: staging
         path: android-kernel
+        
     - name: actions/checkou@v3
       with:
       github-server-url: 'https://github.com'
         repository: online321/AnyKernel3
-        path: android-kernel
+        path: android-kernel/anykernel
       
     - name: Setup Build Environment
       run: |
