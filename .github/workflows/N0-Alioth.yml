@@ -102,7 +102,7 @@ jobs:
         FINAL_ZINAME="${{ env.ZIMAGE_NAME }}-${TIME}"
         mkdir ${{ env.KERNEL_DIR }}/image_output
         cp -fp tmp/tmp.zip ../image_output/${FINAL_ZINAME}.zip
-        md5sum ../image_output/${FINAL_ZINAME}.zip >../image_output/${FINAL_ZINAME}.zip.md5sum
+        # md5sum ../image_output/${FINAL_ZINAME}.zip >../image_output/${FINAL_ZINAME}.zip.md5sum
         rm -rf out
         
     - name: Upload Kernel Image ZIP
