@@ -93,10 +93,11 @@ jobs:
         TIME=$(TZ=Asia/Shanghai date "+%Y%m%d%H%M")
         mkdir -p tmp
         cp -fp ${{ env.ZIMAGE_DIR }}/Image tmp
-        gzip Image
+
         cp -fp ${{ env.ZIMAGE_DIR }}/dtbo.img tmp
         cp -rp ./anykernel/* tmp
         cd tmp
+        7za a -tgz Image.gz Image
         7za a -mx9 tmp.zip *
         cd ..
         echo "FINAL_ZINAME="${{ env.ZIMAGE_NAME }}-${TIME}"" >> $GITHUB_ENV
