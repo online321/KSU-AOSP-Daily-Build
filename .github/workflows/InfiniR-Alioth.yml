@@ -28,7 +28,7 @@ jobs:
       run: |
         mkdir clang
         cd clang
-        git clone -q https://gitlab.com/yaosp/prebuilts_clang_host_linux-x86_clang-r475365b.git
+        git clone -q https://gitlab.com/Alioth-Project/clang-r445002.git
         CLANG_DIR=`pwd`
         echo "CLANG_DIR=$CLANG_DIR" >> $GITHUB_ENV
       
