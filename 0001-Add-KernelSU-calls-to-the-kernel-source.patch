@@ -27,7 +27,7 @@ index 159dd87b93b0..18f7f24b798b 100644
  	int disposition = input_get_disposition(dev, type, code, &value);
 -
 +	ksu_handle_input_handle_event(&type, &code, &value);
-+	
++
  	if (disposition != INPUT_IGNORE_EVENT && type != EV_SYN)
  		add_input_randomness(type, code, value);
  
@@ -101,7 +101,7 @@ index 376543199b5a..0052c8f4cd87 100644
  }
  EXPORT_SYMBOL(vfs_statx_fd);
  
-+ 
++
 +extern int ksu_handle_stat(int *dfd, const char __user **filename_user, int *flags);
 +
  /**
