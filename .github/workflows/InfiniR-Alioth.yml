@@ -28,8 +28,7 @@ jobs:
       run: |
         mkdir clang
         cd clang
-        wget -q https://github.com/Mandi-Sa/clang/releases/download/amd64-kernel-arm-20230205/amd64-kernel-arm-20230205.7z -O clang.7z
-        7za x clang.7z
+        git clone https://gitlab.com/yaosp/prebuilts_clang_host_linux-x86_clang-r475365b.git
         CLANG_DIR=`pwd`
         echo "CLANG_DIR=$CLANG_DIR" >> $GITHUB_ENV
       
@@ -45,7 +44,7 @@ jobs:
         cd android-kernel
         PATH=${{ env.CLANG_DIR }}/bin:$PATH
         DEVICE_NAME=Alioth
-        KERNEL_DEFCONFIG=./alioth_defconfig
+        KERNEL_DEFCONFIG=vendor/alioth_defconfig
         KERNEL_DIR=`pwd`
         echo "KERNEL_DIR=${KERNEL_DIR}" >> $GITHUB_ENV
         echo "ZIMAGE_DIR="${KERNEL_DIR}/out/arch/arm64/boot"" >> $GITHUB_ENV
