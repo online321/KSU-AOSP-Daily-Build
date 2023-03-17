@@ -48,7 +48,7 @@ jobs:
         else
           echo "SOURCE_REPO=raystef66/InfiniR_kernel_alioth" >> $GITHUB_ENV
           if [ ${{ inputs.DEVICE_CODE }} = alioth ] ; then
-            echo "BRANCH_NAME=T" >> $GITHUB_ENV
+            echo "BRANCH_NAME=13.0-alioth" >> $GITHUB_ENV
             echo "DEVICE_NAME=Alioth" >> $GITHUB_ENV
             echo "DEF_CONFIG=vendor/alioth_defconfig" >> $GITHUB_ENV
           elif [ ${{ inputs.DEVICE_CODE }} = munch ] ; then
