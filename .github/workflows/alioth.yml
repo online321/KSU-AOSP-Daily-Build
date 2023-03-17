@@ -1,4 +1,4 @@
-name: Build AOSP Kernel for Alioth
+name: Build RK-AOSP Kernel for Alioth
 
 on: 
   schedule:
