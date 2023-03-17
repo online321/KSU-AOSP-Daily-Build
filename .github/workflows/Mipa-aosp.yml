@@ -70,9 +70,9 @@ jobs:
         ######################
         make CC=clang O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabi- NM=llvm-nm LLVM=1 LLVM_IAS=1 $KERNEL_DEFCONFIG 
         ######################
-        KERNEL_STRING="~N0-KSU//$IMAGE_VERSION-$KSU_VERSION-$IMAGE_CODE-Snapshot"
+        KERNEL_STRING="~Mipa-KSU//$IMAGE_VERSION-$KSU_VERSION-$IMAGE_CODE-Snapshot"
         sed -i '/CONFIG_LOCALVERSION=/ c  CONFIG_LOCALVERSION='"\"$KERNEL_STRING\""' ' out/.config
-        echo "ZIMAGE_NAME=N0-KSU-${IMAGE_VERSION}-${KSU_VERSION}-${DEVICE_NAME}-AOSP-Snapshot" >> $GITHUB_ENV
+        echo "ZIMAGE_NAME=Mipa-KSU-${IMAGE_VERSION}-${KSU_VERSION}-${DEVICE_NAME}-AOSP-Snapshot" >> $GITHUB_ENV
         
         
     - name: Build Kernel
