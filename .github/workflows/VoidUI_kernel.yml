@@ -52,9 +52,9 @@ jobs:
         echo "ANYKERNEL_DIR=$GITHUB_WORKSPACE/anykernel/anykernel" >> $GITHUB_ENV
         TIME=$(TZ=America/Mexico_City date "+%Y%m%d%H%M")
         LOCALVERSION_LINE=$(grep "CONFIG_LOCALVERSION=" android-kernel/arch/arm64/configs/alioth_defconfig)
-        LOCALVERSION_NEW='CONFIG_LOCALVERSION="-Kyr0SU-VoidUI"'
+        LOCALVERSION_NEW='CONFIG_LOCALVERSION="VoidUI"'
         DEVICE=alioth
-        ZIPNAME=Kyr0SU
+        ZIPNAME=VoidUI
         echo "FINAL_ZIP=${ZIPNAME}-VoidUI-${DEVICE}-KERNEL-AOSP-${TIME}" >> $GITHUB_ENV
         sed -i "s/$LOCALVERSION_LINE/$LOCALVERSION_NEW/g" android-kernel/arch/arm64/configs/alioth_defconfig
     
@@ -88,34 +88,12 @@ jobs:
                       LLVM=1 \
                       LLVM_IAS=1 \
                       HOSTCFLAGS="-fuse-ld=lld -Wno-unused-command-line-argument"
-    
-    - name: generate dtb
-      run: |
-        find ${{ env.KERNEL_DIR }}/out/arch/arm64/boot/dts/vendor/qcom -name '*.dtb' -exec cat {} + >${{ env.KERNEL_DIR }}/out/arch/arm64/boot/dtb
-    
-    - name: Upload the kernel image
-      uses: actions/upload-artifact@v3
-      with:
-        name: Image
-        path: ${{ env.ZIMAGE_DIR }}/Image
-
-    - name: Upload DTBO image
-      uses: actions/upload-artifact@v3
-      with:
-        name: dtbo
-        path: ${{ env.ZIMAGE_DIR }}/dtbo.img
-
-    - name: Upload DTB image
-      uses: actions/upload-artifact@v3
-      with:
-        name: dtb
-        path: ${{ env.ZIMAGE_DIR }}/dtb
 
     - name: Make Anykernel for the kernel
       run: |
-        cp -fp ${{ env.ZIMAGE_DIR }}/Image ${{ env.ANYKERNEL_DIR }}
+        cp -fp ${{ env.ZIMAGE_DIR }}/Image.gz-dtb ${{ env.ANYKERNEL_DIR }}
         cp -fp ${{ env.ZIMAGE_DIR }}/dtbo.img ${{ env.ANYKERNEL_DIR }}
-        cp -fp ${{ env.ZIMAGE_DIR }}/dtb ${{ env.ANYKERNEL_DIR }}
+
         
     - name: Upload AnyKernel zip
       uses: actions/upload-artifact@v3
