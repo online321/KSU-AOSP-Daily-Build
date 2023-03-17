@@ -29,7 +29,6 @@ jobs:
       with:
         github-server-url: 'https://github.com'
         repository: osm0sis/AnyKernel3
-        ref: master
         path: anykernel
         
     - name: Checkout aarch64-zyc-linux-gnu
