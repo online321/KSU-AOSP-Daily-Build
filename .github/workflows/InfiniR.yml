@@ -26,27 +26,25 @@ jobs:
 
     - name: Download Compiler - Arm GNU Toolchain
       run: |
-        wget -q https://developer.arm.com/-/media/Files/downloads/gnu/12.2.rel1/binrel/arm-gnu-toolchain-12.2.rel1-x86_64-aarch64_be-none-linux-gnu.tar.xz -O gcc-arm64.tar.xz
-        tar -xf gcc-arm64.tar.xz
+        git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9
 
-    - name: Download Compiler - Arm GNU Toolchain
+    - name: Download Compiler - aarch64 GNU Toolchain
       run: |
-        wget -q https://developer.arm.com/-/media/Files/downloads/gnu/12.2.rel1/binrel/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-linux-gnueabihf.tar.xz -O gcc-arm.tar.xz
-        tar -xf gcc-arm.tar.xz
-
+        git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9
+    
     - name: Download Compiler - Snapdragon LLVM
       run: |
-        git clone --depth=1 --branch aosp-13 https://gitlab.com/VoidUI/snapdragon-clang.git
-
+        wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+/836b6c7f87c4c946d860ef664052282939a9bd31/clang-r445002/
+    
     - name: Variables
       run: |
         echo "KERNEL_DIR=$GITHUB_WORKSPACE/android-kernel" >> $GITHUB_ENV
-        echo "CLANG_DIR=$GITHUB_WORKSPACE/snapdragon-clang/bin" >> $GITHUB_ENV
-        echo "GCC_ARM64_DIR=$GITHUB_WORKSPACE/arm-gnu-toolchain-12.2.rel1-x86_64-aarch64-none-linux-gnu/bin" >> $GITHUB_ENV
-        echo "GCC_ARM_DIR=$GITHUB_WORKSPACE/arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-linux-gnueabihf/bin" >> $GITHUB_ENV
+        echo "CLANG_DIR=$GITHUB_WORKSPACE/clang-r445002/bin" >> $GITHUB_ENV
+        echo "GCC_ARM64_DIR=$GITHUB_WORKSPACE/aarch64-linux-android-4.9/bin" >> $GITHUB_ENV
+        echo "GCC_ARM_DIR=$GITHUB_WORKSPACE/arm-linux-androideabi-4.9/bin" >> $GITHUB_ENV
         echo "ZIMAGE_DIR=$GITHUB_WORKSPACE/android-kernel/out/arch/arm64/boot" >> $GITHUB_ENV
-        echo "ANYKERNEL_DIR=$GITHUB_WORKSPACE/AnyKernel3" >> $GITHUB_ENV
-        TIME=$(TZ=America/Mexico_City date "+%Y%m%d%H%M")
+        echo "ANYKERNEL_DIR=$GITHUB_WORKSPACE/android-kernel/AnyKernel3" >> $GITHUB_ENV
+        TIME=$(TZ=Asia/Shanghai date "+%Y%m%d%H%M")
         DEVICE=alioth
         ZIPNAME=1
         echo "FINAL_ZIP=${ZIPNAME}-Inifinir-${DEVICE}-KERNEL-AOSP-${TIME}" >> $GITHUB_ENV
@@ -75,18 +73,11 @@ jobs:
                       O=out \
                       ARCH=arm64 \
                       CC=${{ env.CLANG_DIR }}/clang \
-                      CLANG_TRIPLE=${{ env.GCC_ARM64_DIR }}/aarch64-none-linux-gnu- \
-                      CROSS_COMPILE=${{ env.GCC_ARM64_DIR }}/aarch64-none-linux-gnu- \
-                      CROSS_COMPILE_COMPAT=${{ env.GCC_ARM_DIR }}/arm-none-linux-gnueabihf- \
-                      LD=${{ env.CLANG_DIR }}/ld.lld \
-                      AR=${{ env.CLANG_DIR }}/llvm-ar \
-                      NM=${{ env.CLANG_DIR }}/llvm-nm \
-                      STRIP=${{ env.CLANG_DIR }}/llvm-strip \
-                      OBJCOPY=${{ env.CLANG_DIR }}/llvm-objcopy \
-                      OBJDUMP=${{ env.CLANG_DIR }}/llvm-objdump \
-                      READELF=${{ env.CLANG_DIR }}/llvm-readelf \
-                      LLVM=1 \
-                      LLVM_IAS=1
+                      CLANG_TRIPLE=${{ env.GCC_ARM64_DIR }}/aarch64-linux-gnu- \
+                      CROSS_COMPILE=${{ env.GCC_ARM64_DIR }}/aarch64-linux-android- \
+                      CROSS_COMPILE_ARM32=${{ env.GCC_ARM_DIR }}/arm-linux-androideabi- \
+                      
+                     
 
     - name: generate dtb
       run: |
@@ -95,8 +86,8 @@ jobs:
     - name: Upload the kernel image
       uses: actions/upload-artifact@v3
       with:
-        name: Image.gz
-        path: ${{ env.ZIMAGE_DIR }}/Image.gz
+        name: Image.gz-dtb
+        path: ${{ env.ZIMAGE_DIR }}/Image.gz-dtb
 
     - name: Upload DTBO image
       uses: actions/upload-artifact@v3
@@ -112,9 +103,9 @@ jobs:
 
     - name: Make Anykernel for the kernel
       run: |
-        cp -fp ${{ env.ZIMAGE_DIR }}/Image.gz ${{ env.ANYKERNEL_DIR }}
+        cp -fp ${{ env.ZIMAGE_DIR }}/Image.gz-dtb ${{ env.ANYKERNEL_DIR }}
         cp -fp ${{ env.ZIMAGE_DIR }}/dtbo.img ${{ env.ANYKERNEL_DIR }}
-        cp -fp ${{ env.ZIMAGE_DIR }}/dtb ${{ env.ANYKERNEL_DIR }}
+        
         
     - name: Upload AnyKernel zip
       uses: actions/upload-artifact@v3
