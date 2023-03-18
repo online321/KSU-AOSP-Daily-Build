@@ -51,16 +51,8 @@ jobs:
         echo "FINAL_ZIP=${ZIPNAME}-Inifinir-${DEVICE}-KERNEL-AOSP-${TIME}" >> $GITHUB_ENV
         sed -i 's/CONFIG_LOCALVERSION="-Inifinir"/CONFIG_LOCALVERSION="-1-Inifinir"/g' "android-kernel/arch/arm64/configs/vendor/alioth_defconfig"
 
-    - name: Fix:Makefile:Properly disable Unknown Warning Option
-      run: |
-        sed -i 's/CLANG_FLAGS	+= -Werror=unknown-warning-option/CLANG_FLAGS	+= -Werror=unknown-warning-option -Wno-unknown-warning-option/g' "android-kernel/Makefile"
-
-    - name: Apply KernelSU
-      run: |
-        cd android-kernel
-        curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
-        wget -q "https://raw.githubusercontent.com/CHIZI-0618/RK-KernelSU_Action/main/KernelSU.patch" -O KernelSU.patch
-        git apply ./KernelSU.patch
+    
+    
 
     - name: Build kernel
       run: |
@@ -68,7 +60,8 @@ jobs:
         KERNEL_DEFCONFIG=vendor/alioth_defconfig
         ARCH=arm64
         SUBARCH=arm64
-        # make O=out ARCH=arm64 CC=${{ env.CLANG_DIR }}/clang $KERNEL_DEFCONFIG
+        make O=out clean
+        make $KERNEL_DEFCONFIG O=out
         make -j$(nproc --all) \
                       O=out \
                       ARCH=arm64 \
@@ -77,8 +70,8 @@ jobs:
                       CROSS_COMPILE=${{ env.GCC_ARM64_DIR }}/aarch64-linux-android- \
                       CROSS_COMPILE_ARM32=${{ env.GCC_ARM_DIR }}/arm-linux-androideabi- \
                       # LD=ld.lld \ 
-                      LLVM=1 \
-                      LLVM_IAS=1
+                      # LLVM=1 \
+                      # LLVM_IAS=1
                      
 
     - name: generate dtb
