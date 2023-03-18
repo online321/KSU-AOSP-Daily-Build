@@ -24,25 +24,21 @@ jobs:
         path: android-kernel
        
 
-    - name: Download Compiler - Arm GNU Toolchain
+    - name: Download Clang-aosp and Gcc-aosp
       run: |
-        git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9
-
-    - name: Download Compiler - aarch64 GNU Toolchain
-      run: |
-        git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9
-    
-    - name: Download Compiler - Snapdragon LLVM
-      run: |
+        cd $GITHUB_WORKSPACE/kernel_workspace
         mkdir clang-aosp
-        wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master-kernel-build-2022/clang-r450784d.tar.gz
-        tar -C clang-aosp/ -zxvf clang-r450784d.tar.gz
+        wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master-kernel-build-2022/clang-${{ env.CLANG_VERSION }}.tar.gz
+        tar -C clang-aosp/ -zxvf clang-${{ env.CLANG_VERSION }}.tar.gz
+        mkdir gcc-aosp
+        wget https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/+archive/refs/tags/android-12.1.0_r27.tar.gz
+        tar -C gcc-aosp/ -zxvf android-12.1.0_r27.tar.gz
     - name: Variables
       run: |
         echo "KERNEL_DIR=$GITHUB_WORKSPACE/android-kernel" >> $GITHUB_ENV
         echo "CLANG_DIR=$GITHUB_WORKSPACE/clang-aosp/bin" >> $GITHUB_ENV
-        echo "GCC_ARM64_DIR=$GITHUB_WORKSPACE/aarch64-linux-android-4.9/bin" >> $GITHUB_ENV
-        echo "GCC_ARM_DIR=$GITHUB_WORKSPACE/arm-linux-androideabi-4.9/bin" >> $GITHUB_ENV
+        echo "GCC_ARM64_DIR=$GITHUB_WORKSPACE/gcc-aosp/bin" >> $GITHUB_ENV
+        # echo "GCC_ARM_DIR=$GITHUB_WORKSPACE/arm-linux-androideabi-4.9/bin" >> $GITHUB_ENV
         echo "ZIMAGE_DIR=$GITHUB_WORKSPACE/android-kernel/out/arch/arm64/boot" >> $GITHUB_ENV
         echo "ANYKERNEL_DIR=$GITHUB_WORKSPACE/android-kernel/AnyKernel3" >> $GITHUB_ENV
         TIME=$(TZ=Asia/Shanghai date "+%Y%m%d%H%M")
@@ -66,9 +62,9 @@ jobs:
                       O=out \
                       ARCH=arm64 \
                       CC=${{ env.CLANG_DIR }}/clang \
-                      CLANG_TRIPLE=${{ env.GCC_ARM64_DIR }}/aarch64-linux-gnu- \
+                      CLANG_TRIPLE=aarch64-linux-gnu- \
                       CROSS_COMPILE=${{ env.GCC_ARM64_DIR }}/aarch64-linux-android- \
-                      CROSS_COMPILE_ARM32=${{ env.GCC_ARM_DIR }}/arm-linux-androideabi- \
+                      # CROSS_COMPILE_ARM32=${{ env.GCC_ARM_DIR }}/arm-linux-androideabi- \
                       # LD=ld.lld \ 
                       # LLVM=1 \
                       # LLVM_IAS=1
