@@ -95,7 +95,7 @@ jobs:
         cp -fp ${{ env.ZIMAGE_DIR }}/Image tmp
         cp -fp ${{ env.ZIMAGE_DIR }}/dtbo.img tmp
         cp -rp ./anykernel/* tmp
-        gzip -f Image
+        
         # cd tmp
         # 7za a -mx9 tmp.zip *
         # cd ..
