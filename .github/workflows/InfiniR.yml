@@ -76,7 +76,7 @@ jobs:
                       CLANG_TRIPLE=${{ env.GCC_ARM64_DIR }}/aarch64-linux-gnu- \
                       CROSS_COMPILE=${{ env.GCC_ARM64_DIR }}/aarch64-linux-android- \
                       CROSS_COMPILE_ARM32=${{ env.GCC_ARM_DIR }}/arm-linux-androideabi- \
-                      LD=ld.lld \ 
+                      # LD=ld.lld \ 
                       LLVM=1 \
                       LLVM_IAS=1
                      
