@@ -34,12 +34,13 @@ jobs:
     
     - name: Download Compiler - Snapdragon LLVM
       run: |
-        wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+/836b6c7f87c4c946d860ef664052282939a9bd31/clang-r445002/
-    
+        mkdir clang-aosp
+        wget https://android.googlesource.com/platform/prebuilts/clang/host/linux-x86/+archive/refs/heads/master-kernel-build-2022/clang-r450784d.tar.gz
+        tar -C clang-aosp/ -zxvf clang-r450784d.tar.gz
     - name: Variables
       run: |
         echo "KERNEL_DIR=$GITHUB_WORKSPACE/android-kernel" >> $GITHUB_ENV
-        echo "CLANG_DIR=$GITHUB_WORKSPACE/clang-r445002/bin" >> $GITHUB_ENV
+        echo "CLANG_DIR=$GITHUB_WORKSPACE/clang-aosp/bin" >> $GITHUB_ENV
         echo "GCC_ARM64_DIR=$GITHUB_WORKSPACE/aarch64-linux-android-4.9/bin" >> $GITHUB_ENV
         echo "GCC_ARM_DIR=$GITHUB_WORKSPACE/arm-linux-androideabi-4.9/bin" >> $GITHUB_ENV
         echo "ZIMAGE_DIR=$GITHUB_WORKSPACE/android-kernel/out/arch/arm64/boot" >> $GITHUB_ENV
