@@ -86,24 +86,26 @@ jobs:
         KBUILD_BUILD_USER=$(echo ${{ github.actor }} | tr A-Z a-z)       
         make -j$(nproc --all) CC=clang O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabi- NM=llvm-nm LLVM=1 LLVM_IAS=1 
   
-    - name: ZIP Kernel
+   - name: ZIP Kernel
       run: |
         mkdir image_output
         cd android-kernel
         TIME=$(TZ=Asia/Shanghai date "+%Y%m%d%H%M")
         mkdir -p tmp
-        cp -fp ${{ env.ZIMAGE_DIR }}/Image.gz-dtb tmp
+        cp -fp ${{ env.ZIMAGE_DIR }}/Image tmp
         cp -fp ${{ env.ZIMAGE_DIR }}/dtbo.img tmp
         cp -rp ./anykernel/* tmp
-        cd tmp
-        7za a -mx9 tmp.zip *
-        cd ..
+        
+        # cd tmp
+        # 7za a -mx9 tmp.zip *
+        # cd ..
         echo "FINAL_ZINAME="${{ env.ZIMAGE_NAME }}-${TIME}"" >> $GITHUB_ENV
         FINAL_ZINAME="${{ env.ZIMAGE_NAME }}-${TIME}"
-        mkdir ${{ env.KERNEL_DIR }}/image_output
-        cp -fp tmp/tmp.zip ../image_output/${FINAL_ZINAME}.zip
+        
+        # mkdir ${{ env.KERNEL_DIR }}/image_output
+        # cp -fp tmp/tmp.zip ../image_output/${FINAL_ZINAME}.zip
         # md5sum ../image_output/${FINAL_ZINAME}.zip >../image_output/${FINAL_ZINAME}.zip.md5sum
-        rm -rf out
+        # rm -rf out
         
     - name: Upload Kernel Image ZIP
       uses: actions/upload-artifact@v3
