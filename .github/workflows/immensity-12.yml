@@ -86,7 +86,7 @@ jobs:
         KBUILD_BUILD_USER=$(echo ${{ github.actor }} | tr A-Z a-z)       
         make -j$(nproc --all) CC=clang O=out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- CROSS_COMPILE_COMPAT=arm-linux-gnueabi- NM=llvm-nm LLVM=1 LLVM_IAS=1 
   
-   - name: ZIP Kernel
+    - name: ZIP Kernel
       run: |
         mkdir image_output
         cd android-kernel
