@@ -1,4 +1,4 @@
-name: Build N0-AOSP Kernel for Alioth
+name: Build immensity-12 Kernel for Alioth
 
 on: 
   schedule:
