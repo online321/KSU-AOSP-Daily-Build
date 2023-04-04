@@ -101,10 +101,10 @@ jobs:
         cd ..
         echo "FINAL_ZINAME="${{ env.ZIMAGE_NAME }}-${TIME}"" >> $GITHUB_ENV
         FINAL_ZINAME="${{ env.ZIMAGE_NAME }}-${TIME}"
-        mkdir ${{ env.KERNEL_DIR }}/image_output
-        cp -fp tmp/tmp.zip ../image_output/${FINAL_ZINAME}.zip
+        #mkdir ${{ env.KERNEL_DIR }}/image_output
+        #cp -fp tmp/tmp.zip ../image_output/${FINAL_ZINAME}.zip
         # md5sum ../image_output/${FINAL_ZINAME}.zip >../image_output/${FINAL_ZINAME}.zip.md5sum
-        rm -rf out
+        #rm -rf out
         
     - name: Upload Kernel Image ZIP
       uses: actions/upload-artifact@v3
