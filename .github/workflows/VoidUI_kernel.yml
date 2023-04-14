@@ -91,6 +91,24 @@ jobs:
     - name: generate dtb
       run: |
         find ${{ env.KERNEL_DIR }}/out/arch/arm64/boot/dts/vendor/qcom -name '*.dtb' -exec cat {} + >${{ env.KERNEL_DIR }}/out/arch/arm64/boot/dtb
+    - name: Upload the kernel image
+      uses: actions/upload-artifact@v3
+      with:
+        name: Image.gz
+        path: ${{ env.ZIMAGE_DIR }}/Image.gz
+
+    - name: Upload DTBO image
+      uses: actions/upload-artifact@v3
+      with:
+        name: dtbo
+        path: ${{ env.ZIMAGE_DIR }}/dtbo.img
+
+    - name: Upload DTB image
+      uses: actions/upload-artifact@v3
+      with:
+        name: dtb
+        path: ${{ env.ZIMAGE_DIR }}/dtb
+
     - name: Make Anykernel for the kernel
       run: |
         cp -fp ${{ env.ZIMAGE_DIR }}/Image ${{ env.ANYKERNEL_DIR }}
