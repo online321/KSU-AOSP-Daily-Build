@@ -1,4 +1,4 @@
-Free name: build VoidUI_kernel for Alioth
+name: build VoidUI_kernel for Alioth
 
 on: 
   schedule:
