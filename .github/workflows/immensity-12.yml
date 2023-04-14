@@ -15,7 +15,7 @@ jobs:
       with:
         github-server-url: 'https://github.com'
         repository: UtsavBalar1231/kernel_xiaomi_sm8250
-        ref: android12-stable
+        ref: android13-stable
         path: android-kernel
     
     - name: Checkout AnyKernel3
