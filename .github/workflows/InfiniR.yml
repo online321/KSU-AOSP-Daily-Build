@@ -75,11 +75,7 @@ jobs:
     - name: Build kernel
       run: |
         cd android-kernel
-        KERNEL_DEFCONFIG=vendor/alioth_defconfig
-        ARCH=arm64
-        SUBARCH=arm64
-        make O=out clean
-        make $KERNEL_DEFCONFIG O=out
+        
         make -j$(nproc --all) \
                       O=out \
                       ARCH=arm64 \
