@@ -96,7 +96,7 @@ jobs:
         cp -fp ${{ env.ZIMAGE_DIR }}/dtbo.img tmp
         cp -rp ./anykernel/* tmp
         cd tmp
-        #gzip -f Image
+        gzip -f Image
         7za a -mx9 tmp.zip *
         cd ..
         echo "FINAL_ZINAME="${{ env.ZIMAGE_NAME }}-${TIME}"" >> $GITHUB_ENV
