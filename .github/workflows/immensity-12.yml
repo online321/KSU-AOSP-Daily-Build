@@ -33,10 +33,9 @@ jobs:
     
     - name: Download Clang Toolchain
       run: |
-        mkdir clang
+        git lfs clone -b amd64-kernel-arm --depth=1 https://codeberg.org/Mandi-Sa/clang.git clang
         cd clang
-        wget -q https://github.com/Mandi-Sa/clang/releases/download/amd64-kernel-arm-20230205/amd64-kernel-arm-20230205.7z -O clang.7z
-        7za x clang.7z
+        chmod -R +x ./
         CLANG_DIR=`pwd`
         echo "CLANG_DIR=$CLANG_DIR" >> $GITHUB_ENV
       
