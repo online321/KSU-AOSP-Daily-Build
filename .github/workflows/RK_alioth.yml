@@ -15,7 +15,7 @@ jobs:
       with:
         github-server-url: 'https://github.com'
         repository: Rohail33/Realking_xiaomi_sm8250
-        ref: T
+        ref: alioth
         path: android-kernel
       
     - name: Setup Build Environment
