@@ -15,7 +15,7 @@ jobs:
       with:
         github-server-url: 'https://github.com'
         repository: projects-nexus/nexus_kernel_xiaomi_sm8250
-        ref: teo
+        ref: staging
         path: android-kernel
     
     - name: Checkout AnyKernel3
